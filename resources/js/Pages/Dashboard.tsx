@@ -1,10 +1,10 @@
-import AdminLayout from '@/Layouts/AdminLayout/AdminLayout';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AdminLayout from "@/Layouts/AdminLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
 
 export default function Dashboard() {
     return (
-        <AdminLayout>
+        <>
             <Head title="Dashboard" />
 
             <div className="py-12">
@@ -16,6 +16,10 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-        </AdminLayout>
+        </>
     );
 }
+
+Dashboard.layout = (page: React.ReactElement) => (
+    <AdminLayout children={page} />
+);

@@ -1,16 +1,15 @@
 import Header from "@/Components/Header";
-import HeaderWithLink from "@/Components/HeaderWithLink";
-import { Card, CardContent, CardHeader } from "@/Components/ui/card";
-import AdminLayout from "@/Layouts/AdminLayout/AdminLayout";
-import { useForm } from "@inertiajs/react";
-import React from "react";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
 import InputError from "@/Components/InputError";
 import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "@/Components/ui/card";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { flashMessage } from "@/lib/utils";
-import { toast } from "sonner";
 import { PenaltySetting } from "@/types";
+import { useForm } from "@inertiajs/react";
+import React from "react";
+import { toast } from "sonner";
 
 interface Props {
     penaltySetting: PenaltySetting;

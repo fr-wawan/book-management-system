@@ -18,6 +18,11 @@ class Book extends Model
         return 'slug';
     }
 
+    public function scopeAvailable(Builder $query)
+    {
+        return $query->where('stock', '>=', 1);
+    }
+
 
     public function scopeFilter(Builder $query, array $filters)
     {
@@ -38,5 +43,10 @@ class Book extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function getIsAvailableAttribute()
+    {
+        return $this->stock >= 1;
     }
 }

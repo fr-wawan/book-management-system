@@ -3,7 +3,7 @@ import HeaderWithLink from "@/Components/HeaderWithLink";
 
 import { Card, CardContent, CardHeader } from "@/Components/ui/card";
 
-import AdminLayout from "@/Layouts/AdminLayout/AdminLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Book, MetaPagination, State } from "@/types";
 
 import React from "react";

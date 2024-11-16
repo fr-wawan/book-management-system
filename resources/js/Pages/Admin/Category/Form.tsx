@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Textarea } from "@/Components/ui/textarea";
-import AdminLayout from "@/Layouts/AdminLayout/AdminLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { flashMessage } from "@/lib/utils";
 import { Category, PageSettings } from "@/types";
 import { useForm } from "@inertiajs/react";

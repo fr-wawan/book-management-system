@@ -1,18 +1,10 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
-import { Link, router } from "@inertiajs/react";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { EllipsisVertical } from "lucide-react";
-import { Avatar, AvatarImage } from "@/Components/ui/avatar";
 import { ActionDialog } from "@/Components/ActionDialog";
+import { Button } from "@/Components/ui/button";
 import { flashMessage } from "@/lib/utils";
+import { Header, Publisher, Renderers } from "@/types";
+import { Link, router } from "@inertiajs/react";
+import { Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
-import { Publisher, Header, Renderers } from "@/types";
 
 export const UsePublisherTable = () => {
     const tableHeaders: Header[] = [
@@ -51,54 +43,40 @@ export const UsePublisherTable = () => {
 
     const renderers: Renderers<Publisher> = {
         action: (item: Publisher) => (
-            <div className="flex justify-end">
-                <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        <EllipsisVertical className="size-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                        <DropdownMenuItem asChild>
-                            <Link
-                                href={route("admin.publishers.edit", item.id)}
-                            >
-                                Edit
-                            </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuGroup>
-                            <ActionDialog
-                                trigger={
-                                    <DropdownMenuItem
-                                        onSelect={(e) => e.preventDefault()}
-                                    >
-                                        Delete
-                                    </DropdownMenuItem>
-                                }
-                                title="Delete Publishers?"
-                                description="Are you sure you want to delete this publishers?"
-                                action={() =>
-                                    router.delete(
-                                        route(
-                                            "admin.publishers.destroy",
-                                            item.id
-                                        ),
-                                        {
-                                            preserveScroll: true,
-                                            preserveState: true,
-                                            onSuccess: (success) => {
-                                                const flash =
-                                                    flashMessage(success);
-                                                if (flash)
-                                                    toast[flash.type](
-                                                        flash.message
-                                                    );
-                                            },
-                                        }
-                                    )
-                                }
-                            />
-                        </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <div className="flex justify-end items-center gap-2">
+                <Button variant={'default'} asChild size={'sm'}>
+                    <Link href={route('admin.publishers.edit', item.id)}>
+                        <Pencil />
+                    </Link>
+                </Button>
+                <ActionDialog
+                    trigger={
+                        <Button
+                            variant={'destructive'}
+                            size={'sm'}
+                        >
+                            <Trash />
+                        </Button>
+                    }
+                    title="Delete publisher?"
+                    description="Are you sure you want to delete this publisher?"
+                    action={() =>
+                        router.delete(
+                            route("admin.publishers.destroy", item.id),
+                            {
+                                preserveScroll: true,
+                                preserveState: true,
+                                onSuccess: (success) => {
+                                    const flash =
+                                        flashMessage(success);
+                                    if (flash)
+                                        toast[flash.type](
+                                            flash.message
+                                        );
+                                },
+                            }
+                        )}
+                />
             </div>
         ),
     };

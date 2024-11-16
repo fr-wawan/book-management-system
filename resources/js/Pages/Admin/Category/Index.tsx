@@ -3,10 +3,10 @@ import HeaderWithLink from "@/Components/HeaderWithLink";
 
 import { Card, CardContent, CardHeader } from "@/Components/ui/card";
 
-import AdminLayout from "@/Layouts/AdminLayout/AdminLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Category, Header, MetaPagination, Renderers, State } from "@/types";
 
-import React from "react";
+import React, { useState } from "react";
 import { useCategoryTable } from "./hooks/UseCategoryTable";
 
 interface Props {

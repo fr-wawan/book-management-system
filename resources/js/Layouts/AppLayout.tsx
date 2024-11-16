@@ -1,13 +1,6 @@
+import { Toaster } from "sonner";
 import { Book, Building, Home, LayoutGrid, Settings } from "lucide-react";
 import { PropsWithChildren } from "react";
-
-import { Toaster } from "@/Components/ui/sonner";
-import { usePage } from "@inertiajs/react";
-import Sidebar from "./Partials/Sidebar";
-import SidebarResponsive from "./Partials/SidebarResponsive";
-
-export const description =
-    "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
 
 const menus = [
     {
@@ -26,28 +19,23 @@ const menus = [
             {
                 title: "Category",
                 icon: LayoutGrid,
-                href: "/admin/categories",
+                href: "/categories",
             },
             {
                 title: "Publisher",
                 icon: Building,
-                href: "/admin/publishers",
+                href: "/publishers",
             },
             {
                 title: "Book",
                 icon: Book,
-                href: "/admin/books",
-            },
-            {
-                title: "Penalty Settings",
-                icon: Settings,
-                href: "/admin/penalty-settings",
+                href: "/books",
             },
         ],
     },
 ];
 
-export default function AdminLayout({ children }: PropsWithChildren) {
+export default function AppLayout({ children }: PropsWithChildren) {
     return (
         <>
             <Toaster position="top-center" richColors />

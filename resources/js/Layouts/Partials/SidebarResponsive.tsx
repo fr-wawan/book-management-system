@@ -25,7 +25,7 @@ export default function SidebarResponsive({ menus }: { menus: MenuType[] }) {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="shrink-0 md:hidden"
+                        className="shrink-0 2xl:hidden"
                     >
                         <Menu className="h-5 w-5" />
                         <span className="sr-only">Toggle navigation menu</span>

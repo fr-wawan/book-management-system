@@ -23,7 +23,7 @@ interface TableProps<T> {
     meta: MetaPagination;
 }
 
-const AdminTable = <T extends { id: number; [key: string]: any }>({
+const AdminTable = <T extends { id: number;[key: string]: any }>({
     headers,
     data,
     renderers,
@@ -99,12 +99,12 @@ const AdminTable = <T extends { id: number; [key: string]: any }>({
                                             key={header.key}
                                             className={cn(
                                                 header.align === "end" &&
-                                                    "text-end",
+                                                "text-end",
                                                 header.align === "center" &&
-                                                    "text-center",
+                                                "text-center",
                                                 (header.align === "left" ||
                                                     !header.align) &&
-                                                    "text-left",
+                                                "text-left",
                                                 "px-2 py-3.5 text-sm font-semibold text-muted-foreground "
                                             )}
                                             scope="col"
@@ -139,8 +139,8 @@ const AdminTable = <T extends { id: number; [key: string]: any }>({
                                             >
                                                 {renderers[header.key]
                                                     ? renderers[header.key](
-                                                          item
-                                                      )
+                                                        item
+                                                    )
                                                     : item[header.key]}
                                             </td>
                                         ))}
@@ -162,7 +162,7 @@ const AdminTable = <T extends { id: number; [key: string]: any }>({
                                 size={"sm"}
                                 variant={link.active ? "default" : "outline"}
                                 asChild
-                                key={link.url}
+                                key={link.label}
                             >
                                 <Link
                                     href={link.url}

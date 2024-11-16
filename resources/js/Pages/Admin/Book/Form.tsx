@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Textarea } from "@/Components/ui/textarea";
-import AdminLayout from "@/Layouts/AdminLayout/AdminLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { flashMessage } from "@/lib/utils";
 import { Book, Category, PageSettings, Publisher } from "@/types";
 import { useForm } from "@inertiajs/react";
@@ -152,7 +152,7 @@ export default function Create({
                                                         key={i}
                                                         value={String(
                                                             new Date().getFullYear() -
-                                                                i
+                                                            i
                                                         )}
                                                     >
                                                         {new Date().getFullYear() -

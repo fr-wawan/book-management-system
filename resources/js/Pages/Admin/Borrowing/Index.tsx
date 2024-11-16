@@ -1,27 +1,31 @@
-import HeaderWithLink from "@/Components/HeaderWithLink";
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/Components/ui/card";
-import AdminLayout from "@/Layouts/AdminLayout";
 import AdminTable from "@/Components/AdminTable";
-import { Publisher, MetaPagination, State } from "@/types";
-import { UsePublisherTable } from "./hooks/UsePublisherTable";
+import HeaderWithLink from "@/Components/HeaderWithLink";
+
+import { Card, CardContent, CardHeader } from "@/Components/ui/card";
+
+import AdminLayout from "@/Layouts/AdminLayout";
+import { Borrowing, MetaPagination, State } from "@/types";
+
+import React from "react";
+import { useBorrowingTable } from "./hooks/UseBorrowingTable";
 
 interface Props {
-    publishers: {
-        data: Publisher[];
+    borrowings: {
+        data: Borrowing[];
         meta: MetaPagination;
     };
     state: State;
 }
 
-export default function Index({ publishers, state }: Props) {
-    const { renderers, tableHeaders } = UsePublisherTable();
+export default function Index({ borrowings, state }: Props) {
+    const { renderers, tableHeaders } = useBorrowingTable();
+
     return (
         <div>
             <HeaderWithLink
-                title="Publishers"
-                subtitle="List of all your publishers"
-                link={route("admin.publishers.create")}
+                title="Borrowings"
+                subtitle="List of all your borrowings"
+                link={route("admin.borrowings.create")}
                 label="Create"
             />
 
@@ -31,9 +35,9 @@ export default function Index({ publishers, state }: Props) {
                     <AdminTable
                         params={state}
                         headers={tableHeaders}
-                        data={publishers.data}
+                        data={borrowings.data}
                         renderers={renderers}
-                        meta={publishers.meta}
+                        meta={borrowings.meta}
                     />
                 </CardContent>
             </Card>

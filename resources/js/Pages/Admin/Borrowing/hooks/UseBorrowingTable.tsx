@@ -1,58 +1,41 @@
 import { ActionDialog } from "@/Components/ActionDialog";
-import { Avatar, AvatarImage } from "@/Components/ui/avatar";
 import { Button } from "@/Components/ui/button";
-import { flashMessage, formatCurrency } from "@/lib/utils";
-import { Book, Header, Renderers } from "@/types";
+import { BORROWING_STATUS, flashMessage } from "@/lib/utils";
+import { Borrowing, Header, Renderers } from "@/types";
 import { Link, router } from "@inertiajs/react";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Pencil, Trash } from "lucide-react";
+import { CreditCard, Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
-export const useBookTable = () => {
+export const useBorrowingTable = () => {
     const tableHeaders: Header[] = [
         {
-            key: "title",
-            label: "Title",
-            sortable: true,
-        },
-        {
-            key: "author",
-            label: "Author",
-            sortable: true,
-        },
-        {
-            key: "stock",
-            label: "Stock",
+            key: "invoice",
+            label: "Invoice",
             sortable: false,
         },
         {
-            key: "year",
-            label: "Year",
+            key: "user_name",
+            label: "Name",
             sortable: true,
         },
         {
-            key: "isbn",
-            label: "ISBN",
-            sortable: true,
-        },
-        {
-            key: "language",
-            label: "Language",
-            sortable: true,
-        },
-        {
-            key: "pages",
-            label: "Pages",
-            sortable: true,
-        },
-        {
-            key: "status",
-            label: "Status",
+            key: "book_title",
+            label: "Book",
             sortable: false,
         },
         {
-            key: "price",
-            label: "Price",
+            key: "borrowed_at",
+            label: "Borrowed At",
+            sortable: true,
+        },
+        {
+            key: "due_at",
+            label: "Due At",
+            sortable: true,
+        },
+        {
+            key: "created_at",
+            label: "Created At",
             sortable: true,
         },
         {
@@ -63,18 +46,24 @@ export const useBookTable = () => {
         },
     ];
 
-    const renderers: Renderers<Book> = {
-        price: (item: Book) => <span>{formatCurrency(item.price)}</span>,
-        cover: (item: Book) => (
-            <Avatar>
-                <AvatarImage src={item.cover} className="object-cover" />
-                <AvatarFallback>{item.title.substring(0, 1)}</AvatarFallback>
-            </Avatar>
+    const renderers: Renderers<Borrowing> = {
+        user_name: (item: Borrowing) => (
+            <span className="text-primary">{item.user_name}</span>
         ),
-        action: (item: Book) => (
+        book_title: (item: Borrowing) => (
+            <span className="text-primary">{item.book_title}</span>
+        ),
+        action: (item: Borrowing) => (
             <div className="flex justify-end items-center gap-2">
+                {item.status === BORROWING_STATUS.BORROWED && (
+                    <Button variant={'default'} asChild size={'sm'} className="bg-blue-600 hover:bg-blue-500">
+                        <Link href={route('admin.borrowings.edit', item.id)}>
+                            <CreditCard />
+                        </Link>
+                    </Button>
+                )}
                 <Button variant={'default'} asChild size={'sm'}>
-                    <Link href={route('admin.books.edit', item.slug)}>
+                    <Link href={route('admin.borrowings.edit', item.id)}>
                         <Pencil />
                     </Link>
                 </Button>
@@ -87,11 +76,11 @@ export const useBookTable = () => {
                             <Trash />
                         </Button>
                     }
-                    title="Delete book?"
-                    description="Are you sure you want to delete this book?"
+                    title="Delete borrowing?"
+                    description="Are you sure you want to delete this borrowing?"
                     action={() =>
                         router.delete(
-                            route("admin.books.destroy", item.slug),
+                            route("admin.borrowings.destroy", item.id),
                             {
                                 preserveScroll: true,
                                 preserveState: true,

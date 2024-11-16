@@ -58,6 +58,24 @@ export interface Menu {
     }[];
 }
 
+enum BorrowingStatus {
+    RETURNED = "Returned",
+    BORROWED = "Borrowed",
+}
+
+export interface Borrowing {
+    id: number;
+    user_id: number;
+    book_id: number;
+    user_name: string;
+    book_title: string;
+    borrowed_at: string;
+    due_at: string;
+    returned_at: string;
+    status: BorrowingStatus;
+    created_at: string;
+}
+
 export interface PageSettings {
     title: string;
     subtitle: string;
