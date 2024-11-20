@@ -1,11 +1,13 @@
 <?php
 
+use App\Enums\PenaltyCondition;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\BorrowingController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PenaltySettingController;
 use App\Http\Controllers\Admin\PublisherController;
+use App\Http\Controllers\Admin\ReturnController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +39,15 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
 
     Route::resource('penalty-settings', PenaltySettingController::class, ['as' => 'admin'])->only(['index', 'update']);
 
-    Route::resource('borrowings', BorrowingController::class, ['as' => 'admin']);
+    Route::resource('borrowings', BorrowingController::class, ['as' => 'admin'])->except(['show']);
+
+    Route::controller(ReturnController::class)->group(function () {
+        Route::get('/returns', 'index')->name('admin.returns.index');
+        Route::get('/returns/{borrowing}', 'show')->name('admin.returns.show');
+        Route::post('/returns/{borrowing}', 'store')->name('admin.returns.store');
+    });
 });
+
 
 
 require __DIR__ . '/auth.php';

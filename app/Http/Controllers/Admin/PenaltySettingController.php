@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PenaltySettingRequest;
 use App\Models\PenaltySetting;
 use Illuminate\Http\Request;
+use App\Enums\PenaltyCondition;
 
 class PenaltySettingController extends Controller
 {
@@ -22,9 +23,9 @@ class PenaltySettingController extends Controller
     }
     public function update(PenaltySettingRequest $request, string $id)
     {
-        PenaltySetting::where('condition', 'late')->update(['amount' => $request->late]);
-        PenaltySetting::where('condition', 'lost')->update(['amount' => $request->lost]);
-        PenaltySetting::where('condition', 'damage')->update(['amount' => $request->damage]);
+        PenaltySetting::where('condition', PenaltyCondition::Late->value)->update(['amount' => $request->late]);
+        PenaltySetting::where('condition', PenaltyCondition::Lost->value)->update(['amount' => $request->lost]);
+        PenaltySetting::where('condition', PenaltyCondition::Damage->value)->update(['amount' => $request->damage]);
 
         flashMessage('Penalty setting updated');
 

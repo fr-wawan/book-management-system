@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Index({ books, state }: Props) {
-    const { renderers, tableHeaders } = useBookTable();
+    const { headers } = useBookTable();
 
     return (
         <div>
@@ -34,9 +34,8 @@ export default function Index({ books, state }: Props) {
                 <CardContent>
                     <AdminTable
                         params={state}
-                        headers={tableHeaders}
+                        headers={headers}
                         data={books.data}
-                        renderers={renderers}
                         meta={books.meta}
                     />
                 </CardContent>

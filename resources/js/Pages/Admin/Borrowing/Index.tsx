@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Index({ borrowings, state }: Props) {
-    const { renderers, tableHeaders } = useBorrowingTable();
+    const { headers } = useBorrowingTable();
 
     return (
         <div>
@@ -34,9 +34,8 @@ export default function Index({ borrowings, state }: Props) {
                 <CardContent>
                     <AdminTable
                         params={state}
-                        headers={tableHeaders}
+                        headers={headers}
                         data={borrowings.data}
-                        renderers={renderers}
                         meta={borrowings.meta}
                     />
                 </CardContent>

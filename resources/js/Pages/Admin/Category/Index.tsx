@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Index({ categories, state }: Props) {
-    const { renderers, tableHeaders } = useCategoryTable();
+    const { headers } = useCategoryTable();
 
     return (
         <div>
@@ -34,9 +34,8 @@ export default function Index({ categories, state }: Props) {
                 <CardContent className="">
                     <AdminTable
                         params={state}
-                        headers={tableHeaders}
+                        headers={headers}
                         data={categories.data}
-                        renderers={renderers}
                         meta={categories.meta}
                     />
                 </CardContent>

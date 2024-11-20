@@ -7,7 +7,7 @@ import { CreditCard, Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 export const useBorrowingTable = () => {
-    const tableHeaders: Header[] = [
+    const headers: Header[] = [
         {
             key: "invoice",
             label: "Invoice",
@@ -17,11 +17,21 @@ export const useBorrowingTable = () => {
             key: "user_name",
             label: "Name",
             sortable: true,
+            cell: (item: Borrowing) => (
+                <span className="text-primary">
+                    {item.user_name}
+                </span>
+            )
         },
         {
             key: "book_title",
             label: "Book",
             sortable: false,
+            cell: (item: Borrowing) => (
+                <span className="text-primary">
+                    {item.book_title}
+                </span>
+            )
         },
         {
             key: "borrowed_at",
@@ -43,64 +53,53 @@ export const useBorrowingTable = () => {
             label: "Action",
             sortable: false,
             align: "end",
-        },
-    ];
-
-    const renderers: Renderers<Borrowing> = {
-        user_name: (item: Borrowing) => (
-            <span className="text-primary">{item.user_name}</span>
-        ),
-        book_title: (item: Borrowing) => (
-            <span className="text-primary">{item.book_title}</span>
-        ),
-        action: (item: Borrowing) => (
-            <div className="flex justify-end items-center gap-2">
-                {item.status === BORROWING_STATUS.BORROWED && (
-                    <Button variant={'default'} asChild size={'sm'} className="bg-blue-600 hover:bg-blue-500">
-                        <Link href={route('admin.borrowings.edit', item.id)}>
-                            <CreditCard />
+            cell: (item: Borrowing) => (
+                <div className="flex justify-end items-center gap-2">
+                    {item.status === BORROWING_STATUS.BORROWED && (
+                        <Button
+                            variant={"default"}
+                            asChild
+                            size={"sm"}
+                            className="bg-blue-600 hover:bg-blue-500"
+                        >
+                            <Link href={route("admin.returns.show", item.invoice)}>
+                                <CreditCard />
+                            </Link>
+                        </Button>
+                    )}
+                    <Button variant={"default"} asChild size={"sm"}>
+                        <Link href={route("admin.borrowings.edit", item.invoice)}>
+                            <Pencil />
                         </Link>
                     </Button>
-                )}
-                <Button variant={'default'} asChild size={'sm'}>
-                    <Link href={route('admin.borrowings.edit', item.id)}>
-                        <Pencil />
-                    </Link>
-                </Button>
-                <ActionDialog
-                    trigger={
-                        <Button
-                            variant={'destructive'}
-                            size={'sm'}
-                        >
-                            <Trash />
-                        </Button>
-                    }
-                    title="Delete borrowing?"
-                    description="Are you sure you want to delete this borrowing?"
-                    action={() =>
-                        router.delete(
-                            route("admin.borrowings.destroy", item.id),
-                            {
-                                preserveScroll: true,
-                                preserveState: true,
-                                onSuccess: (success) => {
-                                    const flash =
-                                        flashMessage(success);
-                                    if (flash)
-                                        toast[flash.type](
-                                            flash.message
-                                        );
-                                },
-                            }
-                        )}
-                />
-            </div>
-        ),
-    };
+                    <ActionDialog
+                        trigger={
+                            <Button variant={"destructive"} size={"sm"}>
+                                <Trash />
+                            </Button>
+                        }
+                        title="Delete borrowing?"
+                        description="Are you sure you want to delete this borrowing?"
+                        action={() =>
+                            router.delete(
+                                route("admin.borrowings.destroy", item.invoice),
+                                {
+                                    preserveScroll: true,
+                                    preserveState: true,
+                                    onSuccess: (success) => {
+                                        const flash = flashMessage(success);
+                                        if (flash) toast[flash.type](flash.message);
+                                    },
+                                }
+                            )
+                        }
+                    />
+                </div>
+            )
+        },
+    ] as const;
 
     return {
-        tableHeaders,
-        renderers,
+        headers,
     };
 };

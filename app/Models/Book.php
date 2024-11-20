@@ -49,4 +49,14 @@ class Book extends Model
     {
         return $this->stock >= 1;
     }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

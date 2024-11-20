@@ -7,7 +7,7 @@ import { Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 export const UsePublisherTable = () => {
-    const tableHeaders: Header[] = [
+    const headers: Header[] = [
         {
             key: "name",
             label: "Name",
@@ -38,51 +38,47 @@ export const UsePublisherTable = () => {
             label: "Action",
             sortable: false,
             align: "end",
+            cell: (item: Publisher) => (
+                <div className="flex justify-end items-center gap-2">
+                    <Button variant={'default'} asChild size={'sm'}>
+                        <Link href={route('admin.publishers.edit', item.id)}>
+                            <Pencil />
+                        </Link>
+                    </Button>
+                    <ActionDialog
+                        trigger={
+                            <Button
+                                variant={'destructive'}
+                                size={'sm'}
+                            >
+                                <Trash />
+                            </Button>
+                        }
+                        title="Delete publisher?"
+                        description="Are you sure you want to delete this publisher?"
+                        action={() =>
+                            router.delete(
+                                route("admin.publishers.destroy", item.id),
+                                {
+                                    preserveScroll: true,
+                                    preserveState: true,
+                                    onSuccess: (success) => {
+                                        const flash =
+                                            flashMessage(success);
+                                        if (flash)
+                                            toast[flash.type](
+                                                flash.message
+                                            );
+                                    },
+                                }
+                            )}
+                    />
+                </div>
+            )
         },
     ];
 
-    const renderers: Renderers<Publisher> = {
-        action: (item: Publisher) => (
-            <div className="flex justify-end items-center gap-2">
-                <Button variant={'default'} asChild size={'sm'}>
-                    <Link href={route('admin.publishers.edit', item.id)}>
-                        <Pencil />
-                    </Link>
-                </Button>
-                <ActionDialog
-                    trigger={
-                        <Button
-                            variant={'destructive'}
-                            size={'sm'}
-                        >
-                            <Trash />
-                        </Button>
-                    }
-                    title="Delete publisher?"
-                    description="Are you sure you want to delete this publisher?"
-                    action={() =>
-                        router.delete(
-                            route("admin.publishers.destroy", item.id),
-                            {
-                                preserveScroll: true,
-                                preserveState: true,
-                                onSuccess: (success) => {
-                                    const flash =
-                                        flashMessage(success);
-                                    if (flash)
-                                        toast[flash.type](
-                                            flash.message
-                                        );
-                                },
-                            }
-                        )}
-                />
-            </div>
-        ),
-    };
-
     return {
-        tableHeaders,
-        renderers,
+        headers,
     };
 };

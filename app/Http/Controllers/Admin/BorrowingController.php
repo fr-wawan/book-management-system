@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\BorrowingService;
+use App\Enums\BorrowingStatus;
 
 class BorrowingController extends Controller
 {
@@ -21,7 +22,8 @@ class BorrowingController extends Controller
      */
     public function index()
     {
-        $borrowings = Borrowing::with(['book', 'user'])->paginate(request()->load ?? 10);
+        $borrowings = Borrowing::with(['book', 'user', 'bookReturn'])
+            ->paginate(request()->load ?? 10);
 
         return inertia('Admin/Borrowing/Index', [
             'borrowings' => BorrowingResource::collection($borrowings),
@@ -76,7 +78,9 @@ class BorrowingController extends Controller
      */
     public function show(Borrowing $borrowing)
     {
-        //
+        return inertia('Admin/Borrowing/Show', [
+            'borrowing' => new BorrowingResource($borrowing)
+        ]);
     }
 
     /**
@@ -124,6 +128,7 @@ class BorrowingController extends Controller
      */
     public function destroy(Borrowing $borrowing)
     {
+        $borrowing->book->increment('stock');
         $borrowing->delete();
 
         flashMessage('Borrowing deleted successfully', 'success');

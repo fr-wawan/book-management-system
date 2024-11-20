@@ -115,6 +115,7 @@ export default function Form({ borrowing, page_settings, books, users }: Props) 
                                     type="date"
                                     name="borrowing_date"
                                     defaultValue={data.borrowing_date}
+                                    className="mt-2"
                                     disabled
                                 />
                             </div>
@@ -125,6 +126,7 @@ export default function Form({ borrowing, page_settings, books, users }: Props) 
                                     type="date"
                                     name="return_date"
                                     defaultValue={data.due_at}
+                                    className="mt-2"
                                     disabled
                                 />
                             </div>

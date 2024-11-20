@@ -20,6 +20,27 @@ export const BORROWING_STATUS = {
     RETURNED: "Returned",
 }
 
+export const BOOK_RETURN_STATUS = {
+    COMPLETED: "completed",
+    PENDING: "pending",
+    PENALTY: "penalty",
+}
+
+export const conditionList = [
+    {
+        label: "Good",
+        value: "good"
+    },
+    {
+        label: "Damaged",
+        value: "damage"
+    },
+    {
+        label: "Lost",
+        value: "lost"
+    }
+]
+
 export function formatCurrency(amount: number) {
     return new Intl.NumberFormat("id-ID", {
         style: "currency",

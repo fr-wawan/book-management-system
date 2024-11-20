@@ -15,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice')->unique();
             $table->foreignIdFor(User::class)
                 ->constrained('users')
                 ->cascadeOnDelete();
             $table->foreignIdFor(Book::class)
                 ->constrained('books')
                 ->cascadeOnDelete();
-            $table->string('invoice')->unique();
             $table->date('borrowed_at')->default(now());
             $table->date('due_at')->default(now()->addDays(7));
-            $table->date('returned_at')->nullable();
-            $table->enum('status', ['Borrowed', 'Returned'])->default('Borrowed');
-            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

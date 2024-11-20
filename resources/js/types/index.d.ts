@@ -31,11 +31,13 @@ export interface Book {
     summary: string;
     cover: string;
     price: number;
+    publisher: Publisher;
     created_at: string;
 }
 
 export interface User {
     id: number;
+    username: string;
     name: string;
     email: string;
     email_verified_at?: string;
@@ -65,6 +67,7 @@ enum BorrowingStatus {
 
 export interface Borrowing {
     id: number;
+    invoice: string;
     user_id: number;
     book_id: number;
     user_name: string;
@@ -74,6 +77,9 @@ export interface Borrowing {
     returned_at: string;
     status: BorrowingStatus;
     created_at: string;
+    user: User;
+    book: Book;
+    bookReturn: BookReturn;
 }
 
 export interface PageSettings {
@@ -103,11 +109,14 @@ export type Renderers<T> = {
 } & {
     action: (item: T) => React.ReactNode;
 };
-export interface Header {
+import React from "react";
+
+export interface Header<T = any> {
     key: string;
     label: string;
     sortable: boolean;
     align?: "left" | "center" | "end";
+    cell?: (item: T) => React.ReactNode;
 }
 
 export interface PenaltySetting {
@@ -115,6 +124,27 @@ export interface PenaltySetting {
     late: number;
     damage: number;
     lost: number;
+}
+
+export interface Penalty {
+    id: number;
+    condition: string;
+    condition_amount: number;
+    late_amount: number;
+    total_amount: number;
+    status: string;
+    notes: string;
+}
+
+type BookReturnStatus = "completed" | "penalty" | "pending";
+
+export interface BookReturn {
+    id: number;
+    borrowing_id: number;
+    borrowing: Borrowing;
+    returned_at: string;
+    penalty: Penalty;
+    status: BookReturnStatus;
 }
 
 export type PageProps<

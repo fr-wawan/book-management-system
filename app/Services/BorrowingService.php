@@ -15,7 +15,7 @@ class BorrowingService
             'user_id' => $userId,
             'borrowed_at' => now(),
             'due_at' => now()->addDays(7),
-            'invoice' => 'INV/' . now()->format('Ymd') . '/' . rand(100, 999),
+            'invoice' => 'INV-' . now()->format('Ymd') . rand(100, 999),
         ]);
 
         $book->decrement('stock');
@@ -47,9 +47,10 @@ class BorrowingService
 
     public function isAlreadyBorrowed($bookId, $userId)
     {
-        return Borrowing::where('book_id', $bookId)
+        return Borrowing::query()
+            ->where('book_id', $bookId)
             ->where('user_id', $userId)
-            ->whereNull('returned_at')
+            ->whereDoesntHave('bookReturn')
             ->exists();
     }
 

@@ -12,13 +12,11 @@ import { cn } from "@/lib/utils";
 import { Header, MetaPagination, State } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { ArrowDownUp, Undo2 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface TableProps<T> {
     headers: Header[];
     data: T[];
-    renderers: { [key: string]: (item: T) => React.ReactNode };
-    actions?: { [key: number]: (item: T) => React.ReactNode };
     params: State;
     meta: MetaPagination;
 }
@@ -26,8 +24,6 @@ interface TableProps<T> {
 const AdminTable = <T extends { id: number;[key: string]: any }>({
     headers,
     data,
-    renderers,
-    actions,
     meta,
     ...props
 }: TableProps<T>) => {
@@ -135,12 +131,10 @@ const AdminTable = <T extends { id: number;[key: string]: any }>({
                                         {headers.map((header) => (
                                             <td
                                                 key={header.key}
-                                                className="whitespace-nowrap px-6 py-8 text-sm  text-foreground"
+                                                className="whitespace-nowrap px-6 py-8 text-sm text-foreground"
                                             >
-                                                {renderers[header.key]
-                                                    ? renderers[header.key](
-                                                        item
-                                                    )
+                                                {header.cell
+                                                    ? header.cell(item)
                                                     : item[header.key]}
                                             </td>
                                         ))}

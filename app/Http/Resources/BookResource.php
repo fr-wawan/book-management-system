@@ -30,6 +30,7 @@ class BookResource extends JsonResource
             'status' => $this->stock > 0 ? 'Available' : 'Unavailable',
             'category_id' => $this->category_id,
             'publisher_id' => $this->publisher_id,
+            'publisher' => new PublisherResource($this->publisher),
             'created_at' => $this->created_at,
         ];
     }

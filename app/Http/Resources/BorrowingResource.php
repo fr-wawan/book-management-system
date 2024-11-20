@@ -24,8 +24,10 @@ class BorrowingResource extends JsonResource
             'borrowed_at' => $this->borrowed_at,
             'returned_at' => $this->returned_at,
             'due_at' => $this->due_at,
-            'status' => $this->status,
+            'status' => $this->bookReturn ? 'Returned' : 'Borrowed',
             'created_at' => $this->created_at->format('d-M-Y H:i:s'),
+            'user' => new UserResource($this->user),
+            'book' => new BookResource($this->book),
         ];
     }
 }
